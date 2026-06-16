@@ -5,6 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MC4V9Q2Z');</script>
+  <!-- End Google Tag Manager -->
+
   <!-- ══ FAVICONS ════════════════════════════════════════════════ 
   Icons for Favicon credit goes to Flaticon.com 
   Favicon generated from https://realfavicongenerator.net/your-favicon-is-ready
@@ -17,15 +25,7 @@
   <meta name="apple-mobile-web-app-title" content="USCIS Tracker" />
   <link rel="manifest" href="favicon/site.webmanifest" />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RFNQ86PYEK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-RFNQ86PYEK');
-  </script>
+  <!-- No third-party analytics loaded to keep the site privacy-first -->
 
   <!-- ══ PRIMARY SEO META TAGS ══════════════════════════════════ -->
   <title>USCIS Case Status Tracker | Free I-485 Case Analyzer Tool</title>
@@ -105,12 +105,13 @@
     ]
   }
   </script>
-
-  <title>USCIS Case Status Tracker | Free I-485 Case Analyzer Tool</title>
   <link rel='stylesheet' href='css/style.css' />
 </head>
 
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MC4V9Q2Z"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- ══ HEADER ══════════════════════════════════════════════════ -->
   <div class="header">
@@ -123,7 +124,7 @@
           <span class="hdr-badge">USCIS · I-485</span>
         </div>
         <div class="hdr-title">Case Status Tracker</div>
-        <div class="hdr-sub">Upload or paste your USCIS API JSON · Default timestamp is in CDT from UTC (Zulu)</div>
+        <div class="hdr-sub">Upload or paste your USCIS API JSON, or load a sample case for an instant dashboard walkthrough.</div>
       </div>
 
       <!-- Timezone selector -->
@@ -177,11 +178,28 @@
   <!-- ══ MAIN ════════════════════════════════════════════════════ -->
   <div class="main">
 
+    <!-- Dashboard overview -->
+    <div class="dashboard-overview">
+      <div class="info-card">
+        <div class="info-card-title">🔒 Privacy First</div>
+        <div class="info-card-copy">All case data stays in your browser. No third-party tracking, no data storage, no transmission.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">📊 Full Case Dashboard</div>
+        <div class="info-card-copy">Get a smart timeline, status flags, notices, and a narrative summary from your USCIS JSON.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">🚀 Try Sample Data</div>
+        <div class="info-card-copy">Load the built-in sample case to explore the dashboard instantly without any JSON file.</div>
+      </div>
+    </div>
+
     <!-- Input section -->
     <div class="input-section">
       <div class="input-header">
         <span class="sec-label">📂 Load Case Data</span>
         <div class="input-actions">
+          <button class="btn btn-secondary" onclick="loadSampleData()">📄 Load Sample Case</button>
           <button class="btn btn-ghost" onclick="clearAll()">✕ Clear</button>
           <button class="btn btn-primary" onclick="parseJSON()">▶ Analyze Case</button>
         </div>
@@ -339,8 +357,8 @@
     <div class="empty-state" id="emptyState">
       <div class="empty-icon">📋</div>
       <div class="empty-title">Ready to Analyze Your USCIS Case</div>
-      <div class="empty-desc">Upload a JSON file or paste your USCIS API response above, then click <strong>Analyze
-          Case</strong></div>
+      <div class="empty-desc">Upload a JSON file, paste your USCIS API response, or click <strong>Load Sample Case</strong> to see the dashboard in action.</div>
+      <button class="btn btn-secondary empty-btn" onclick="loadSampleData()">Load Sample Case</button>
     </div>
 
     <!-- Disclaimer (always visible) -->
@@ -372,24 +390,16 @@
       </div>
     </div>
 
-    <!-- Visitor analytics map (MapMyVisitors) -->
+    <!-- Visitor analytics removed for privacy -->
     <div class="section-divider">
       <div class="section-divider-line"></div>
-      <div class="section-divider-title">Visitor Map &amp; Stats</div>
+      <div class="section-divider-title">Privacy</div>
       <div class="section-divider-line"></div>
     </div>
-    <div class="card visitor-map-card">
-      <div style="position:relative;cursor:default;">
-        <div class="visitor-map-embed">
-          <script type='text/javascript' id='mapmyvisitors'
-            src='https://mapmyvisitors.com/map.js?cl=ffffff&w=a&t=tt&d=qkPat3f11qsU2Kt5XJGo_3GHA3vLMGZqsSztXCBO0H4&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
-          <noscript>
-            <div style="color:var(--text-muted);font-size:12px">Enable JavaScript to view the visitor map.</div>
-          </noscript>
-        </div>
-        <!-- Transparent overlay to intercept clicks from the third-party map script -->
-        <div style="position:absolute;inset:0;z-index:10;cursor:default;"></div>
-      </div>
+    <div class="card" style="padding:24px; margin-bottom:24px;">
+      <p style="margin:0;color:var(--text-muted);font-size:0.97rem;line-height:1.7;">
+        This application does not load third-party analytics or visitor tracking scripts. All USCIS case data is processed locally in your browser, and no personal data is stored or transmitted.
+      </p>
     </div>
 
   </div><!-- /main -->
