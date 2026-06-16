@@ -3,70 +3,274 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>USCIS Tracker</title>
+  <title>USCIS Tracker Dashboard</title>
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f4f7ff;
-      color: #111827;
+    :root {
+      color-scheme: light;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #eef2ff;
+      color: #0f172a;
     }
-    .page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
+    * {
       box-sizing: border-box;
     }
-    .card {
-      width: 100%;
-      max-width: 860px;
-      background: #ffffff;
-      border-radius: 24px;
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
-      padding: 40px;
-      text-align: center;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);
     }
-    h1 {
-      margin: 0 0 18px;
-      font-size: 3rem;
-      letter-spacing: -0.03em;
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
     }
-    p {
-      margin: 0 0 28px;
-      line-height: 1.75;
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: #6366f1;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.06em;
+    }
+    .brand-info h1 {
+      margin: 0;
+      font-size: clamp(2rem, 2.5vw, 2.8rem);
+      line-height: 1.05;
+    }
+    .brand-info p {
+      margin: 4px 0 0;
       color: #475569;
-      font-size: 1.05rem;
+      font-size: 1rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
     }
     .button {
-      display: inline-block;
-      padding: 14px 26px;
-      color: #ffffff;
-      background: #2563eb;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
       border-radius: 999px;
-      text-decoration: none;
       font-weight: 600;
-      transition: background 0.2s ease;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
-    .button:hover {
-      background: #1d4ed8;
+    .button-primary {
+      background: #4338ca;
+      color: #ffffff;
+      box-shadow: 0 18px 30px rgba(67, 56, 202, 0.18);
     }
-    .note {
-      margin-top: 24px;
-      font-size: 0.95rem;
+    .button-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 36px rgba(67, 56, 202, 0.22);
+    }
+    .button-secondary {
+      background: rgba(15, 23, 42, 0.06);
+      color: #0f172a;
+    }
+    .panel {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(12px);
+    }
+    .dashboard-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-top: 28px;
+    }
+    .status-card {
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246, 248, 255, 0.95));
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.06);
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .status-card h2 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+      color: #111827;
+    }
+    .status-value {
+      font-size: 2.9rem;
+      font-weight: 700;
+      margin: 0;
+      color: #4338ca;
+      letter-spacing: -0.03em;
+    }
+    .status-note {
+      margin-top: 12px;
       color: #64748b;
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
+    .section {
+      margin-top: 32px;
+    }
+    .section h3 {
+      margin: 0 0 16px;
+      font-size: 1.25rem;
+    }
+    .feature-list {
+      display: grid;
+      gap: 14px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+    }
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: #eef2ff;
+      color: #4338ca;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+    }
+    .feature-content {
+      flex: 1;
+    }
+    .feature-content strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #111827;
+    }
+    .footer {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+    .footer a {
+      color: #4338ca;
+      text-decoration: none;
+    }
+    @media (max-width: 720px) {
+      header {
+        align-items: flex-start;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="card">
-      <h1>USCIS Tracker</h1>
-      <p>Welcome to your GitHub Pages project. This is a simple homepage for the repository <strong>USCIS-Tracker</strong>.
-      You can update this page with your own tracker content, styling, and data.</p>
-      <a class="button" href="https://github.com/piranfar/USCIS-Tracker" target="_blank" rel="noreferrer">View Repository</a>
-      <div class="note">Once you publish this repository as a GitHub Pages site, the page will appear at <strong>https://piranfar.github.io/USCIS-Tracker/</strong>.</div>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-icon">U</div>
+        <div class="brand-info">
+          <h1>USCIS Tracker</h1>
+          <p>Dashboard view for your USCIS case tracker project, created by <strong>piranfar</strong>.</p>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a class="button button-primary" href="https://github.com/piranfar/USCIS-Tracker" target="_blank" rel="noreferrer">View on GitHub</a>
+        <a class="button button-secondary" href="https://piranfar.github.io/USCIS-Tracker/" target="_blank" rel="noreferrer">Open site</a>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="dashboard-grid">
+        <div class="status-card">
+          <div>
+            <h2>Cases tracked</h2>
+            <p class="status-value">128</p>
+          </div>
+          <p class="status-note">Number of USCIS cases currently monitored in the dashboard. Update this value with your real data.</p>
+        </div>
+
+        <div class="status-card">
+          <div>
+            <h2>Last update</h2>
+            <p class="status-value">Today</p>
+          </div>
+          <p class="status-note">Track when the page or data was last refreshed to keep your status accurate.</p>
+        </div>
+
+        <div class="status-card">
+          <div>
+            <h2>Active alerts</h2>
+            <p class="status-value">3</p>
+          </div>
+          <p class="status-note">Current alerts for case timelines, document changes, or status updates.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Project highlights</h3>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-content">
+            <strong>Clear status cards</strong>
+            Display case progress and alerts with structured overview cards.
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-content">
+            <strong>Ready for GitHub Pages</strong>
+            This page works as a static landing/dashboard hosted directly from your repo.
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🧭</div>
+          <div class="feature-content">
+            <strong>Professional layout</strong>
+            Clean spacing, modern cards, and responsive mobile behavior.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <span>Built for <strong>piranfar</strong> and the USCIS Tracker project.</span>
+      <span><a href="https://github.com/piranfar" target="_blank" rel="noreferrer">github.com/piranfar</a></span>
     </div>
   </div>
 </body>
