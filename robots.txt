@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://piranfar.github.io/USCIS-Tracker/sitemap.xml
